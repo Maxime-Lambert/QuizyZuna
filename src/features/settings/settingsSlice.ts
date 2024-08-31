@@ -31,11 +31,8 @@ export const settingsSlice = createSlice({
         changeTimer: (state, action) => {
           state.timer = action.payload;
         },
-        resetSettings: (state) => {
-          state.amount = 10;
-          state.timer = 20;
-          state.themes = [];
-          state.difficulties = [];
+        resetSettings: () => {
+          return initialState;
         }
     }
 });

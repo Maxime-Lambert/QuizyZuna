@@ -1,33 +1,55 @@
-import { Box } from "@mui/material";
+import { Box, Button, LinearProgress } from "@mui/material";
 import { useEffect } from "react";
-import { changeQuestionTimer, selectQuestionTimer } from "./questionSlice";
+import { changeQuestionTimer, nextQuestion, selectQuestionTimer } from "./questionSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectTimer } from "../settings/settingsSlice";
+import { DoubleArrowRounded } from "@mui/icons-material";
 
-const TimerBar = ({ time } : {time:number}) => {
-    const dispatch = useAppDispatch();
-    const timeLeft = useAppSelector(selectQuestionTimer);
+export default function TimerBar ({goNext}:{goNext:boolean}) {
+  const dispatch = useAppDispatch();
+  const timeLeft = useAppSelector(selectQuestionTimer);
+  const timerBase = useAppSelector(selectTimer);
+  const timePassed = 0.1;
+  const intervalTime = 100;
+  const timerStartOffset = 1000;
+
+  function HandleGoNextQuestion() {
+    dispatch(nextQuestion());
+  }
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch(changeQuestionTimer(timeLeft - 0.1));
-    }, 100);
+    if(timeLeft === timerBase) {
+      setTimeout(() => {
+        if(timeLeft > 0) {
+          dispatch(changeQuestionTimer(timeLeft - timePassed));
+        }
+      }, timerStartOffset);
+    } else {
+      const intervalId = setInterval(() => {
+        dispatch(changeQuestionTimer(timeLeft - timePassed));
+      }, intervalTime);
+  
+      return () => clearInterval(intervalId);
+    }
+  }, [timeLeft]);
 
-    return () => clearInterval(intervalId);
-  }, [timeLeft, dispatch]);
+  if(goNext) {
+    return(
+      <Box mt={5} display={"flex"} justifyContent={"flex-end"}>
+        <Button sx={{ height:30 }} variant="contained" onClick={HandleGoNextQuestion} startIcon={<DoubleArrowRounded/>}>
+          Question Suivante
+        </Button>
+      </Box>
+    )
+  }
 
-  const progress = timeLeft > 0 ? (time - timeLeft) / time : 1;
+  const progress = timeLeft > 0 ? (timerBase - timeLeft) / timerBase : 1;
+  const timerColor = timeLeft < (timerBase / 5) ? "error" : timeLeft < (timerBase/2) ? "secondary" : "success";
+  const TimerProgressPercentage = 100 - (progress * 100);
 
   return (
     <Box mt={5}>
-      <Box sx={{ 
-        background: 'linear-gradient(to right, #f0ff00, #ff0000)',
-            width: `${100 - (progress * 100)}%`,
-            minHeight: 20 }}>
-      </Box>
+      <LinearProgress color={timerColor} sx={{height:30}} variant="determinate" value={TimerProgressPercentage}></LinearProgress>
     </Box>
   );
 };
-
-export default TimerBar;
-
-export {}

@@ -1,62 +1,51 @@
-import { Box, Checkbox, CircularProgress, FormControl, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
+import { Box, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { changeDifficulties } from '../settingsSlice';
 import { useAppDispatch } from '../../../app/hooks';
-import useAxios from '../../../hooks/useAxios';
 import { useTranslation } from 'react-i18next';
+import useAxios from '../../../hooks/useAxios';
 
-const DifficultySelectField = () => {
+export default function DifficultySelectField () {
   const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const [difficulties, setDifficulties] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const [difficulties, setDifficulties] = useState<string[]>([]);
+  const [difficultyOptions, setDifficultyOptions] = useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof difficulties>) => {
-      const {
-        target: { value },
-      } = event;
-      setDifficulties(
-        typeof value === 'string' ? value.split(',') : value,
-      );
-      dispatch(changeDifficulties(value));
-    };
+  const {getQuestionsDifficultiesFunction} = useAxios();
   
-    const { response, error, loading } = useAxios({ url : "questions_difficulties" })
-  
-    const difficultyOptions = response as string[];
+  useEffect(() => {
+    getQuestionsDifficultiesFunction()
+      .then(difficultiesResponse => { setDifficultyOptions(difficultiesResponse.data as string[]); setDifficulties(difficultiesResponse.data as string[]); })
+      .catch(err => {
+        return (
+          <Typography variant="h6" mt={20} color={"red"}>
+            Une erreur s'est produite
+          </Typography>
+        )});
+  }, []);
 
-    useEffect(() => {
-      if(Array.isArray(difficultyOptions)) {
-        setDifficulties(difficultyOptions);
-      }
-    }, [difficultyOptions]);
-  
-    if(loading) {
-      return (
-        <Box mt={20}>
-          <CircularProgress></CircularProgress>
-        </Box>
-      )
-    }
-  
-    if(error) {
-      return (
-        <Typography variant="h6" mt={20} color={"red"}>
-          Something Went Wrong !
-        </Typography>
-      )
-    }
+  const handleDifficultySelection = (event: SelectChangeEvent<typeof difficulties>) => {
+    const {
+      target: { value },
+    } = event;
+    setDifficulties(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+    dispatch(changeDifficulties(value));
+  };
 
-    const EmptyBox = difficultyOptions.length % 2 === 1 ? <Box sx={{background:'linear-gradient(to right top, #6b00ff, #0200ff)', flexBasis:'50%'}}></Box> : null;
+  const EmptyBox = difficultyOptions.length % 2 === 1 ? <Box sx={{background:'#283593', flexBasis:'50%'}}></Box> : null;
 
   return (
     <Box mt={3} width={"100%"}>
         <FormControl size='small' fullWidth>
             <InputLabel> Difficultés </InputLabel>
-            <Tooltip arrow title={<Typography variant="body2">{`Sélectionnez les difficultés de questions qui vous intéressent.`}</Typography>} placement='right'>
-              <Select multiple 
+            <Tooltip title={<Typography variant="body2">{`Sélectionnez les difficultés de questions qui vous intéressent.`}</Typography>} placement='right'>
+              <Select multiple
+                      color='primary'
                       value={difficulties} 
                       label='Difficultés' 
-                      onChange={handleChange} 
+                      onChange={handleDifficultySelection} 
                       renderValue={(selected) => (<Typography> {selected.map(sel => t(sel)).join(', ')} </Typography> )}>
                           { difficultyOptions.map((difficulty) => (
                             <MenuItem key={difficulty} value={difficulty} sx={{flexBasis:'50%'}}>
@@ -71,7 +60,3 @@ const DifficultySelectField = () => {
     </Box>
   )
 };
-
-export default DifficultySelectField;
-
-export {}

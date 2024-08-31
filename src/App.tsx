@@ -1,18 +1,24 @@
-import { Box, Container, createTheme, ThemeProvider, Typography, Link as RouterLink } from '@mui/material';
+import { Box, Container, createTheme, ThemeProvider } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import logo from './assets/b.png';
-import PrincipalBackground from './assets/principal_background.jpg';
+import PrincipalBackground from './assets/background.jpg';
 import ButtonAppBar from './components/AppBar';
-import { blue, yellow } from '@mui/material/colors';
+import Logo from './components/Logo';
+import Copyright from './components/Copyright';
 
 const MuiTheme = createTheme({
   palette: {
     primary: {
-      main: blue[900],
+      main: '#283593',
     },
     secondary: {
-      main: yellow[700],
+      main: '#fbc02d',
     },
+    error: {
+      main: '#b71c1c'
+    },
+    success: {
+      main: '#1b5e20'
+    }
   },
   typography: {
     allVariants: {
@@ -26,41 +32,42 @@ const MuiTheme = createTheme({
           background: 'primary.main',
           border: '1px solid',
           borderColor: '#fbc02d',
-          fontSize: '100%'
+          fontSize: '100%',
         }
       }
     },
     MuiSelect: {
       styleOverrides: {
         root: {
-          background: '#1a237e'
+          background: '#283593',
+          borderRadius: '8px'
         },
         icon: {
           fill: 'white'
         }
       }
     },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          background: '#1a237e',
-          input:  {
-            color: 'white'
-          }
-        }
-      }
-    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          background: '#1a237e',
-          color: 'white'
+          background: '#283593',
+          color: 'white',
+          "&.Mui-selected": {
+            background: '#283593'
+          },
+          '&:hover': {
+            background: '#757de8 !important',
+          },
         }
       }
     },
     MuiCheckbox: {
       styleOverrides: {
         root: {
+          borderRadius: '8px',
+          "&.Mui-checked": {
+            color: 'white'
+          },
           color: 'white'
         }
       }
@@ -68,7 +75,8 @@ const MuiTheme = createTheme({
     MuiInput: {
       styleOverrides: {
         root: {
-          color: 'white'
+          color: 'white',
+          borderRadius: '8px'
         }
       }
     },
@@ -87,7 +95,7 @@ const MuiTheme = createTheme({
         tooltip: {
           border: '1px solid',
           borderColor: '#fbc02d',
-          background: '#1a237e'
+          backgroundColor: '#283593'
         }
       }
     },
@@ -101,43 +109,47 @@ const MuiTheme = createTheme({
         },
         rail: {
           color: '#fbc02d'
+        },
+        markLabel: {
+          color: "white"
+        },
+        valueLabel: {
+          backgroundColor:'#283593'
+        },
+        mark: {
+          color: 'white'
+        }
+      }
+    },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          border: '1px solid',
+          borderColor: '#fbc02d',
+          borderRadius: '8px'
         }
       }
     }
   }
 });
 
-function Copyright() {
-  return (
-    <Typography mt={2} variant="body2" align="center">
-      {'Copyright © '}
-      <RouterLink color="inherit" href="https://mui.com/">
-        QuizyZuna
-      </RouterLink>{' '}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
-
 export default function App() {
-
   return (
     <ThemeProvider theme={MuiTheme}>
       <ButtonAppBar></ButtonAppBar>
-      <Box id='background' minWidth={'100vw'} minHeight={'100vh'} 
-      sx={{ backgroundImage: `url(${PrincipalBackground})`, backgroundRepeat:'no-repeat', backgroundSize:'cover', backgroundPosition: 'center'}}>
+      <Box id='background' 
+            minWidth={'100vw'} 
+            minHeight={'100vh'}
+            sx={{ backgroundImage: `url(${PrincipalBackground})`, 
+                  backgroundRepeat:'no-repeat',
+                  backgroundSize:'cover',
+                  backgroundPosition: 'center'}}>
         <Container maxWidth='xl'>
-          <Box sx={{width:'40%', margin:'auto'}}>
-              <Box  mt={2} 
-                    component="img"
-                    alt="QuizyZuna Logo"
-                    src={logo}
-                    />
-          </Box>
-          <Box mt={5} display={"flex"} justifyContent={"center"}>
+          <Logo />
+          <Box mt={2} display={"flex"} justifyContent={"center"}>
             <Outlet/>
           </Box>
-          </Container>
+        </Container>
         <Copyright />
       </Box>
     </ThemeProvider>

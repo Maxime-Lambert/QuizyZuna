@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { questionAnswerStatus } from "./questionAnswerStatus";
-import QuestionInformations from "./QuestionInformations";
 import { questionAnswer } from "./questionAnswer";
+import { QuestionInformations } from "./QuestionInformations";
 
 export interface QuestionState {
     score: number;
@@ -56,13 +56,8 @@ export const questionSlice = createSlice({
         nextQuestion: (state) => {
           state.questionIndex++;
         },
-        resetQuestionsValues: (state) => {
-            state.score = 0;
-            state.questionTimer = 0;
-            state.questionIndex = 0;
-            state.questionAnswersStatus = [];
-            state.questions = [];
-            state.questionAnswers = [];
+        resetQuestionsValues: () => {
+            return initialState;
         }
     }
 });

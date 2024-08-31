@@ -8,12 +8,14 @@ import { Stack, Slider } from '@mui/material';
 import { useAppDispatch } from '../app/hooks';
 import { changeVolume } from '../appSlice';
 import { useNavigate } from 'react-router-dom';
+import { resetQuestionsValues } from '../features/question/questionSlice';
 
 export default function ButtonAppBar() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   function handleGoHome(): void {
+    dispatch(resetQuestionsValues());
     navigate('/');
   }
 
@@ -22,9 +24,9 @@ export default function ButtonAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+    <Box sx={{flexGrow: 1 }}>
+      <AppBar position="absolute">
+        <Toolbar variant='dense'>
           <IconButton
             size="large"
             edge="start"

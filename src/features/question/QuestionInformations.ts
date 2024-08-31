@@ -3,5 +3,3 @@ export interface QuestionInformations {
   correctAnswer: string;
   wrongAnswers: string[];
 }
-
-export default QuestionInformations
