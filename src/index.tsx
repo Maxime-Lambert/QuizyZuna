@@ -5,7 +5,7 @@ import { store } from './app/store';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import './i18n'
-import { createBrowserRouter, RouterProvider, Link as RouterLink, Router } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Settings from './features/settings/Settings';
 import FinalScreen from './features/finalScreen/FinalScreen';
 import Question from './features/question/Question';
