@@ -5,8 +5,8 @@ import questionReducer, {
 
   describe('question reducer', () => {
     const initialState: QuestionState = {
-      score: 3,
-      questionTimer: 20,
+      score: 0,
+      questionTimer: 0,
       questionIndex: 0,
       questionAnswersStatus: [],
       questions: [],
@@ -14,17 +14,17 @@ import questionReducer, {
     };
     it('should handle initial state', () => {
       expect(questionReducer(undefined, { type: 'unknown' })).toEqual({
-        score: 3,
+        score: 0,
+        questionTimer: 0,
         questionIndex: 0,
-        timer: 20,
-        answers: [],
+        questionAnswersStatus: [],
         questions: [],
-        answerTimers: []
+        questionAnswers: []
       });
     });
 
     it('should handle add score', () => {
-      const actual = questionReducer(initialState, addScore(1));
-      expect(actual.score).toEqual(4);
+      const actual = questionReducer(initialState, addScore(444));
+      expect(actual.score).toEqual(444);
     });
   });
