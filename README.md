@@ -1,46 +1,74 @@
-# Getting Started with Create React App
+# Quel est ce projet ?  
+  
+QuizyZuna est une application web statique en **React**. Le site propose de passer des quiz de culture générale en QCM. Les questions proviennent de l'API **QuizyZunaAPI** (<https://github.com/Maxime-Lambert/QuizyZunaAPI>).
+  
+Par la suite, le site proposera aux utilisateurs de créer leurs propres quiz et les personnaliser pour pouvoir les faire jouer à leurs amis ou à un public.  
+  
+Le nom vient de la fusion entre le mot Quiz et le mot Kizuna qui signifie “les liens entre les gens” en japonais.  
+  
+# Sommaire  
+  
+- [Quel est ce projet ?](#Quel-est-ce-projet-?)  
+- [Sommaire](#sommaire)  
+- [Technologies Utilisées](#Technologies-Utilisées)  
+- [Objectif](#objectif)  
+- [État du projet](#État-Du-Projet)
+- [Comment lancer le projet en local ?](#Comment-lancer-le-projet-en-local-?)  
+- [Comment essayer l'API sur Azure ?](#Comment-essayer-l'API-sur-Azure-?)  
+- [Continuous Deployment](#continuous-deployment)  
+- [Licence](#licence)  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+# Technologies utilisées  
+  
+- Typescript
+- React
+- Redux
+- MUI
+  
+# Objectif
 
-## Available Scripts
+L'objectif de ce projet est de mener mon projet de site web à son terme en concevant le front qui viendra se couple à l'**API** déjà réalisée. Je souhaitais me former à l'un des trois frameworks de front les plus populaires et j'ai fini par choisir **React**.
 
-In the project directory, you can run:
+# État du projet  
+  
+Le site permet de régler les quiz, de jouer en solo et d'analyser ses résultats à la fin. Cela correspond à l'idée d'une première version tel que je me l'étais défini. Il y a cependant beaucoup d'améliorations à apporter, en priorité :
 
-### `npm start`
+- Clean Code (Découper les composants en plus petits éléments réutilisables principalement)
+- Testing
+- Internationalisation
+- Adaptation Mobile
+- Ajout des pages classiques (à propos, contact, conditions générales, 404)
+- Afficher les tags des questions (difficultés, thèmes)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Et des ajouts par la suite :
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Possibilité de jouer en multi avec des salles privés (et du chat)
+- Meilleur tri des thèmes (+ tri par dates)
+- Création de quiz personnalisés  
+- Import de fichiers
 
-### `npm test`
+# Comment lancer le projet en local ?  
+  
+Pour commencer, suivez ses étapes :  
+  
+1. Installer **Node** 18  
+2. Cloner la solution  
+3. Se placer dans le répertoire local de la solution et entrez la commande suivante dans un terminal  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```  
+> npm start 
+```  
 
-### `npm run build`
+5. Naviguer sur [http://localhost:3000](http://localhost:3000) lorsque la commande est finie d'être exécutée. Attention cependant, l'application est faite pour fonctionner avec un l'API déployée à l'aide de Docker et il n'y a pas de questions de base.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Continuous Deployment  
+  
+L'application est déployée automatiquement sur **Azure Static Web Apps** à l'adresse
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+https://brave-coast-0cc72c303.5.azurestaticapps.net/
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Licence
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Ce projet est sous licence MIT.

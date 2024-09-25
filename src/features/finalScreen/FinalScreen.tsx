@@ -21,11 +21,19 @@ export default function FinalScreen () {
   const questions = useAppSelector(selectQuestions);
 
   const [showDetailedScore, setShowDetailedScore] = useState(false);
-  const {getQuestionsFunction} = useAxios();
+  const {getQuestionsFunction, addTimesAnswered} = useAxios();
   
   useEffect(() => {
     if(questions.length === 0) {
       navigate('/');
+    } else {
+      for (let index = 0; index < questions.length; index++) {
+        const question = questions[index];
+        const answer = answers[index];
+        if(answer.answerGiven) {
+          addTimesAnswered(question.title,answer.answerGiven);
+        }
+      }
     }
   }, []);
   

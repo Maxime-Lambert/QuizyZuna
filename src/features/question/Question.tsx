@@ -52,6 +52,11 @@ export default function Question () {
         .then(res => {
           dispatch(changeQuestions(res.data as QuestionInformations[]));
         })
+        .catch(err => {
+          return (
+            <CircularProgress></CircularProgress>
+          )
+        })
     }
   }, [questions, questionIndex]);
   

@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
+import { Box, Checkbox, CircularProgress, FormControl, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { changeDifficulties } from '../settingsSlice';
 import { useAppDispatch } from '../../../app/hooks';
@@ -11,17 +11,16 @@ export default function DifficultySelectField () {
   const [difficulties, setDifficulties] = useState<string[]>([]);
   const [difficultyOptions, setDifficultyOptions] = useState<string[]>([]);
 
-  const {getQuestionsDifficultiesFunction} = useAxios();
+  const {getQuestionsDifficulties} = useAxios();
   
   useEffect(() => {
-    getQuestionsDifficultiesFunction()
+    getQuestionsDifficulties()
       .then(difficultiesResponse => { setDifficultyOptions(difficultiesResponse.data as string[]); setDifficulties(difficultiesResponse.data as string[]); })
       .catch(err => {
         return (
-          <Typography variant="h6" mt={20} color={"red"}>
-            Une erreur s'est produite
-          </Typography>
-        )});
+          <CircularProgress></CircularProgress>
+        );
+      });
   }, []);
 
   const handleDifficultySelection = (event: SelectChangeEvent<typeof difficulties>) => {

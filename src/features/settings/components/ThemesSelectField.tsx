@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
+import { Box, Checkbox, CircularProgress, FormControl, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import useAxios from '../../../hooks/useAxios';
 import { changeThemes } from '../settingsSlice';
@@ -28,10 +28,9 @@ export default function ThemesSelectField () {
     .then(themesResponse => { setThemesOptions(themesResponse.data as string[]); setThemes(themesResponse.data as string[]); })
     .catch(err => {
       return (
-        <Typography variant="h6" mt={20} color={"red"}>
-          Une erreur s'est produite
-        </Typography>
-      )});
+        <CircularProgress></CircularProgress>
+      );
+    });
   }, []);
 
   const EmptyBox = themesOptions.length % 2 === 1 ? <Box sx={{background:'#283593', flexBasis:'50%'}}></Box> : null;
