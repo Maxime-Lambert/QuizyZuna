@@ -243,7 +243,7 @@ export default function Question () {
     dispatch(incorrectQuestionAnswer(questionIndex));
     const buttons = buttonClicked.parentElement?.children;
     if (buttons !== undefined) {
-      for (let index = 1; index < buttons.length; index++) {
+      for (let index = 0; index < buttons.length; index++) {
         const buttonCurrent = buttons.item(index) as unknown as HTMLButtonElement;
         if (buttonCurrent["textContent"] === question.correctAnswer) {
           buttonCurrent.style.background = '#1b5e20';
