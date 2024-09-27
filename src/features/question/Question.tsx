@@ -113,10 +113,12 @@ export default function Question () {
     dispatch(unansweredQuestionAnswer(questionIndex));
     setAnswered(true);
     const buttons = document.getElementById('answer1')!.parentElement!.children;
-    for (let index = 1; index < buttons.length; index++) {
+    console.log(buttons);
+    for (let index = 0; index < buttons.length; index++) {
       const buttonCurrent = buttons.item(index) as unknown as HTMLButtonElement;
-      const buttonText = buttonCurrent["textContent"];
-      buttonCurrent.style.background = buttonText === questions[questionIndex].correctAnswer ? "success" : "primary";
+      if (buttonCurrent["textContent"] === questions[questionIndex].correctAnswer) {
+        buttonCurrent.style.background = '#1b5e20';
+      }
     }
     setTimeout(() => {
       setHideTimer(true);
